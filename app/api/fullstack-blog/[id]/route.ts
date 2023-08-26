@@ -35,3 +35,16 @@ export async function PUT(req: Request, res: NextResponse) {
       await prisma.$disconnect();
     }
 }
+export async function DELETE(req: Request, res: NextResponse) {
+    const id = req.url.split("fullstack-blog/")[1];
+    try {
+      await main();
+      await prisma.post.delete({where:{id}})
+      return NextResponse.json({ message: "Delete Success", id });
+    } catch (error) {
+      return NextResponse.json({ message: "Error", error });
+    }
+    finally{
+      await prisma.$disconnect();
+    }
+}
